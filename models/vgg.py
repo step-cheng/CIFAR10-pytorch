@@ -1,7 +1,12 @@
+"""
+VGG19 model adapted for the CIFAR10 dataset. Since VGG19 was made for the ImageNet dataset, 
+and the inputs were 224x224 pixels, the linear layers needed to be modified. Adaptive pooling
+was replaced with average pooling since the HxW after the convolution stack becomes 1x1. 
+Batch Normalization was added too.
+"""
+
 import torch
 from torch import nn
-
-# Modified original VGG19 file by 
 
 layers = [3,64,64,'P',128,128,'P',256,256,256,256,'P',512,512,512,512,'P',512,512,512,512,'P']
 
