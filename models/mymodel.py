@@ -11,42 +11,50 @@ from torch import nn
 # within a subclass of torch.nn.Module, it's assumed we want to track gradients on the layer's weights
 class myNN(nn.Module):
 
-  def __init__(self):
-    super().__init__()
-    self.flat = nn.Flatten()
+    def __init__(self):
+        super().__init__()
+        self.flat = nn.Flatten()
 
-    # Sequential class stores modules that will be passed sequentially through constructor
-    # input: 64x3x32x32;   output: 64x16x8x8
-    self.conv_pool_stack = nn.Sequential(
-      nn.Conv2d(3,16,kernel_size=3,padding=1, bias=False),
-      nn.ReLU(),
-      nn.BatchNorm2d(16),
-      nn.Conv2d(16,16,kernel_size=3,padding=1, bias=False),
-      nn.ReLU(),
-      nn.MaxPool2d(2,stride=2),
-      nn.BatchNorm2d(16),
-      nn.Conv2d(16,32,kernel_size=3,padding=1,bias=False),
-      nn.ReLU(),
-      nn.BatchNorm2d(32),
-      nn.Conv2d(32,32,kernel_size=3,padding=1,bias=False),
-      nn.ReLU(),
-      nn.BatchNorm2d(32),
-      nn.MaxPool2d(2,stride=2),
-      nn.BatchNorm2d(32)
-    )
+        # Sequential class stores modules that will be passed sequentially through constructor
+        # input: 64x3x32x32;   output: 64x16x8x8
+        self.conv_pool_stack = nn.Sequential(
+            nn.Conv2d(3,16,kernel_size=3,padding=1, bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16,16,kernel_size=3,padding=1, bias=False),
+            nn.ReLU(),
+            nn.MaxPool2d(2,stride=2),
+            nn.BatchNorm2d(16),
+            nn.Conv2d(16,32,kernel_size=3,padding=1,bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(32),
+            nn.Conv2d(32,32,kernel_size=3,padding=1,bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(32),
+            nn.MaxPool2d(2,stride=2),
+            nn.BatchNorm2d(32)
+            )
 
     # input: 64x32x8x8;    output: 16x10
-    self.linear_relu_stack = nn.Sequential(
-      self.flat,           # Flatten class flattens starting at dimension default 1 and ending at dimension default -1 --> 16x2048
-      nn.Linear(2048, 512, bias=True),
-      nn.ReLU(),
-      nn.Linear(512, 64, bias=True),
-      nn.ReLU(),
-      nn.Linear(64, 10, bias=True),
-      nn.Softmax(dim=1)
-    )
+        self.linear_relu_stack = nn.Sequential(
+            self.flat,           # Flatten class flattens starting at dimension default 1 and ending at dimension default -1 --> 16x2048
+            nn.Linear(2048, 512, bias=True),
+            nn.ReLU(),
+            nn.Linear(512, 64, bias=True),
+            nn.ReLU(),
+            nn.Linear(64, 10, bias=True),
+            nn.Softmax(dim=1)
+            )
 
-  def forward(self,x):
-    after_conv = self.conv_pool_stack(x)
-    logits = self.linear_relu_stack(after_conv)
+    def forward(self,x):
+        after_conv = self.conv_pool_stack(x)
+        logits = self.linear_relu_stack(after_conv)
+        return logits
+    
+def mymodeltest():
+    input = torch.randn((2,3,32,32))
+    model = myNN()
+    logits = model(input)
     return logits
+
+# logits = mymodeltest()
