@@ -22,14 +22,14 @@ class VGG19(nn.Module):
             nn.Linear(64,64,bias=True),
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.5, inplace=False),
-            nn.Linear(64,10,bias=True)
+            nn.Linear(64,10,bias=True),
+            nn.Softmax(dim=1)
         )
 
     def forward(self,x):
         out = self.layers(x)
-        out = out.view(out.size()[0],-1)
-        output = self.linear_stack(out)
-        logits = nn.Softmax(dim=1)(output)
+        out = out.view(out.shape[0],-1)
+        logits = self.linear_stack(out)
         return logits
         
     def make_layers(self,layers):
