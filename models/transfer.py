@@ -13,5 +13,5 @@ new_classifier = nn.Sequential(
 	nn.ReLU(inplace=True),
 	nn.Linear(64,10,bias=True)
 )
-myVgg19.avgpool = nn.AvgPool2d(output_size=(1,1))
+myVgg19.avgpool = nn.AvgPool2d(kernel_size=1,stride=1)
 myVgg19.classifier = new_classifier
