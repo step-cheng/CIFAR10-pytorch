@@ -10,10 +10,9 @@ for param in myVgg19.parameters():
 	param.requires_grad = False
 
 new_classifier = nn.Sequential(
-	nn.Linear(in_features=512*2*2, out_features=256, bias=True),
-	nn.BatchNorm1d(256),
+	nn.Linear(in_features=512*2*2, out_features=128, bias=True),
 	nn.ReLU(inplace=True),
-	nn.Linear(256,10,bias=True)
+	nn.Linear(128,10,bias=True)
 )
 
 myVgg19.classifier = new_classifier
