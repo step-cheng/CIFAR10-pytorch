@@ -1,6 +1,6 @@
 """
 My own model, which I made to help me learn how to use the PyTorch framework. After making this model,
-which generally achieves a 65% training accuracy, I became much more comfortable working with PyTorch,
+which generally achieves a 70% training accuracy, I became much more comfortable working with PyTorch,
 and started implementing famous architectures.
 """
 
