@@ -32,23 +32,21 @@ class myNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2,stride=2),
             nn.BatchNorm2d(64),
-            nn.Conv2d(64,128,kernel_size=3,padding=1,bias=False),
+            nn.Conv2d(64,256,kernel_size=3,padding=1,bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(128),
-            nn.Conv2d(128,128,kernel_size=3,padding=1,bias=False),
+            nn.BatchNorm2d(256),
+            nn.Conv2d(256,256,kernel_size=3,padding=1,bias=False),
             nn.ReLU(),
             nn.MaxPool2d(2,stride=2),
-            nn.BatchNorm2d(128)
+            nn.BatchNorm2d(256)
             )
 
-    # input: Nx128x4x4    output: Nx10
+    # input: Nx256x4x4    output: Nx10
         self.linear_relu_stack = nn.Sequential(
             self.flat,           # Flatten class flattens starting at dimension default 1 and ending at dimension default -1 --> 16x2048
-            nn.Linear(2048, 512, bias=True),
+            nn.Linear(256*4*4, 512, bias=True),
             nn.ReLU(),
-            nn.Linear(512, 64, bias=True),
-            nn.ReLU(),
-            nn.Linear(64, 10, bias=True),
+            nn.Linear(512, 10, bias=True),
             nn.Softmax(dim=1)
             )
 
