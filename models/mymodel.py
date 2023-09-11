@@ -16,7 +16,7 @@ class myNN(nn.Module):
         self.flat = nn.Flatten()
 
         # Sequential class stores modules that will be passed sequentially through constructor
-        # input: 64x3x32x32;   output: 64x16x8x8
+        # input: Nx3x32x32;   output: Nx64x8x8
         self.conv_pool_stack = nn.Sequential(
             nn.Conv2d(3,16,kernel_size=3,padding=1, bias=False),
             nn.ReLU(),
@@ -25,17 +25,23 @@ class myNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2,stride=2),
             nn.BatchNorm2d(16),
-            nn.Conv2d(16,32,kernel_size=3,padding=1,bias=False),
+            nn.Conv2d(16,64,kernel_size=3,padding=1,bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(32),
-            nn.Conv2d(32,32,kernel_size=3,padding=1,bias=False),
+            nn.BatchNorm2d(64),
+            nn.Conv2d(64,64,kernel_size=3,padding=1,bias=False),
             nn.ReLU(),
-            nn.BatchNorm2d(32),
             nn.MaxPool2d(2,stride=2),
-            nn.BatchNorm2d(32)
+            nn.BatchNorm2d(64),
+            nn.Conv2d(64,128,kernel_size=3,padding=1,bias=False),
+            nn.ReLU(),
+            nn.BatchNorm2d(128),
+            nn.Conv2d(128,128,kernel_size=3,padding=1,bias=False),
+            nn.ReLU(),
+            nn.MaxPool2d(2,stride=2),
+            nn.BatchNorm2d(128)
             )
 
-    # input: 64x32x8x8;    output: 16x10
+    # input: Nx128x4x4    output: Nx10
         self.linear_relu_stack = nn.Sequential(
             self.flat,           # Flatten class flattens starting at dimension default 1 and ending at dimension default -1 --> 16x2048
             nn.Linear(2048, 512, bias=True),
