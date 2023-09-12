@@ -6,7 +6,7 @@ from torchvision import models
 myVgg19 = models.vgg19_bn(weights=models.VGG19_BN_Weights.DEFAULT)
 myVgg19.avgpool = nn.Identity()
 myVgg19.features = myVgg19.features[:52]
-for param in myVgg19.parameters():
+for param in myVgg19.features[:46].parameters():
 	param.requires_grad = False
 
 new_classifier = nn.Sequential(
@@ -16,4 +16,5 @@ new_classifier = nn.Sequential(
 )
 
 myVgg19.classifier = new_classifier
+
 pass
