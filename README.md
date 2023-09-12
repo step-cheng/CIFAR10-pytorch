@@ -6,7 +6,7 @@ Made my own machine learning model first to become familiar with the PyTorch fra
 Also playing around with transfer learning with VGG, ResNet-18, Resnet-50, MobileNet
 
 Current Accuracies:
-My Model: 71.52%
+My Model: 83.5%
 ResNet18: 47.24%
 VGG19: 57.9%
 ResNet50: 
