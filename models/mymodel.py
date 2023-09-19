@@ -49,7 +49,6 @@ class myNN(nn.Module):
             nn.Linear(512, 64, bias=True),
             nn.ReLU(),
             nn.Linear(64, 10, bias=True),
-            nn.Softmax(dim=1)
             )
 
     def forward(self,x):
